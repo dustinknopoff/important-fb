@@ -7,6 +7,10 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" keywords={[`facebook`, `birthdays`, `filter`]} />
     <h1>Figure out the important friends!</h1>
+    <p>
+      Use this website to drill through the many friends you have on Facebook to
+      find the ones you think are actually important.
+    </p>
     <ol>
       <li>
         Go to <Link to="https://www.facebook.com">facebook.com</Link>
