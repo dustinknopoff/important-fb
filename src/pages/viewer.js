@@ -111,6 +111,9 @@ export default class Viewer extends React.Component {
             justifyContent: 'space-between',
           }}
         >
+          <p>
+            <i>Preferred file is friends.json</i>
+          </p>
           <form>
             <input
               type="file"
