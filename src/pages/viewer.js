@@ -167,12 +167,7 @@ export default class Viewer extends React.Component {
                         <th>{friend.name}</th>
                         <th>
                           <form>
-                            <input
-                              type="checkbox"
-                              name={index}
-                              value={true}
-                              checked
-                            />
+                            <input type="checkbox" name={index} value={true} />
                           </form>
                         </th>
                       </tr>
