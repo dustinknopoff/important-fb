@@ -10,12 +10,12 @@ export default class Viewer extends React.Component {
   }
 
   handleUpload = async () => {
-    const data = this.uploader.current.files[0]
-    console.log(data)
+    const data = this.refs.uploader.files[0]
+    let _this = this
     var reader = new FileReader()
     reader.onload = await function(e) {
       let text = reader.result
-      this.setState({
+      _this.setState({
         content: JSON.parse(text),
         filtered: JSON.parse(text),
       })
@@ -109,7 +109,7 @@ export default class Viewer extends React.Component {
             <input
               type="file"
               accept="application/json"
-              ref={this.uploader}
+              ref="uploader"
               onChange={this.handleUpload}
             />
             <select onChange={this.filter}>
