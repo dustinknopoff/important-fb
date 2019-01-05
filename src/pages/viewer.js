@@ -4,26 +4,18 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 export default class Viewer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { content: {}, filtered: {} }
-    this.handleUpload = this.handleUpload.bind(this)
-    this.toggleCheck = this.toggleCheck.bind(this)
-    this.saveImportant = this.saveImportant.bind(this)
-    this.save = this.save.bind(this)
-    this.download = this.download.bind(this)
-    this.filter = this.filter.bind(this)
-    this.uploader = React.createRef()
+  state = {
+    content: {},
+    filtered: {},
   }
 
-  async handleUpload() {
+  handleUpload = async () => {
     const data = this.uploader.current.files[0]
     console.log(data)
-    let _this = this
     var reader = new FileReader()
     reader.onload = await function(e) {
       let text = reader.result
-      _this.setState({
+      this.setState({
         content: JSON.parse(text),
         filtered: JSON.parse(text),
       })
@@ -31,7 +23,7 @@ export default class Viewer extends React.Component {
     reader.readAsText(data)
   }
 
-  toggleCheck(e) {
+  toggleCheck = e => {
     const index = e.currentTarget.name
     const val = e.currentTarget.checked
     const content = this.state.content
@@ -42,7 +34,7 @@ export default class Viewer extends React.Component {
     })
   }
 
-  filter(e) {
+  filter = e => {
     if (e.currentTarget.value === 'checked') {
       let filtered = this.state.filtered
       filtered = filtered.friends.filter(
@@ -61,7 +53,7 @@ export default class Viewer extends React.Component {
     }
   }
 
-  download(filename, text) {
+  download = (filename, text) => {
     var element = document.createElement('a')
     element.setAttribute(
       'href',
@@ -77,7 +69,7 @@ export default class Viewer extends React.Component {
     document.body.removeChild(element)
   }
 
-  save() {
+  save = () => {
     if (
       Object.keys(this.state.content).length !== 0 &&
       this.state.content.constructor === Object
@@ -88,7 +80,7 @@ export default class Viewer extends React.Component {
     }
   }
 
-  saveImportant() {
+  saveImportant = () => {
     let filtered = this.state.filtered.friends.filter(
       friend => friend.checked !== undefined && friend.checked === true
     )
@@ -100,10 +92,12 @@ export default class Viewer extends React.Component {
   }
 
   render() {
-    let _this = this
     return (
       <Layout>
         <SEO title="Viewer" />
+        <p>
+          <i>Preferred file is friends.json</i>
+        </p>
         <div
           style={{
             display: 'flex',
@@ -111,31 +105,34 @@ export default class Viewer extends React.Component {
             justifyContent: 'space-between',
           }}
         >
-          <p>
-            <i>Preferred file is friends.json</i>
-          </p>
           <form>
             <input
               type="file"
               accept="application/json"
-              ref={_this.uploader}
-              onChange={_this.handleUpload}
+              ref={this.uploader}
+              onChange={this.handleUpload}
             />
-            <select onChange={_this.filter}>
+            <select onChange={this.filter}>
               <option value="All">All</option>
               <option value="checked">Checked</option>
               <option value="Unchecked">Unchecked</option>
             </select>
           </form>
-          <button onClick={_this.save} style={{ height: '30px' }}>
+          <button
+            onClick={this.save}
+            style={{ height: '30px', width: '7vmin' }}
+          >
             Save
           </button>
-          <button onClick={_this.saveImportant} style={{ height: '30px' }}>
+          <button
+            onClick={this.saveImportant}
+            style={{ height: '30px', width: '20vmin' }}
+          >
             Save Important
           </button>
         </div>
-        {Object.keys(_this.state.filtered).length !== 0 &&
-          _this.state.filtered.constructor === Object && (
+        {Object.keys(this.state.filtered).length !== 0 &&
+          this.state.filtered.constructor === Object && (
             <table>
               <thead>
                 <tr>
@@ -144,7 +141,7 @@ export default class Viewer extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {_this.state.filtered.friends.map((friend, index) => {
+                {this.state.filtered.friends.map((friend, index) => {
                   if (
                     friend.checked === undefined ||
                     friend.checked === false
